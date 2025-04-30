@@ -12,10 +12,17 @@ function getNotes() {
 }
 
 function createNoteElement(inputText, index) {
+
+    const parentDiv = document.createElement('div');
+    parentDiv.classList.add('parentDiv')
+
+    const buttonsDiv = document.createElement('div')
+    buttonsDiv.classList.add('buttonsDiv')
+
     const newDiv = document.createElement('div');
     newDiv.classList.add('newDiv');
     newDiv.innerText = inputText;
-    notesContainer.append(newDiv);
+    parentDiv.append(newDiv);
 
     const deleteBtn = document.createElement('button');
     const editBtn = document.createElement('button');
@@ -25,24 +32,26 @@ function createNoteElement(inputText, index) {
     editBtn.innerText = "Edit";
     deleteBtn.innerText = "Delete";
 
-    newDiv.append(deleteBtn);
-    newDiv.append(editBtn);
+    buttonsDiv.append(deleteBtn, editBtn);
+    parentDiv.append(newDiv, buttonsDiv);
+    notesContainer.append(parentDiv)
+    
 
     deleteBtn.addEventListener('click', () => {
         const notes = getNotes();
-        notes.splice(index, 1);  
+        notes.splice(index, 1);
         saveNotes(notes);
 
-        renderNotes(); 
+        renderNotes();
     });
 
     editBtn.addEventListener('click', () => {
         const notes = getNotes();
-        inputNotes.value = notes[index]; 
-        notes.splice(index, 1);  
+        inputNotes.value = notes[index];
+        notes.splice(index, 1);
         saveNotes(notes);
 
-        renderNotes(); 
+        renderNotes();
     });
 }
 
@@ -67,8 +76,8 @@ addBtn.addEventListener('click', () => {
     notes.push(inputText);
     saveNotes(notes);
 
-    inputNotes.value = ""; 
-    renderNotes(); 
+    inputNotes.value = "";
+    renderNotes();
 });
 
 
